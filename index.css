@@ -1,0 +1,22 @@
+body {
+    background-color: #202020;
+    font-family: Open Sans, sans-serif;
+    font-size: 2rem;
+}
+
+.main {
+    background-color: #f7f7f7;
+    border-radius: 25px;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    width: 35vw;
+    height: 20vw;
+    margin: 10vw auto auto auto;
+}
+
+button {
+    font-size: 3rem;
+    font-weight: bold;
+}

@@ -1,0 +1,22 @@
+.idea
+
+# build artifacts
+*.tsbuildinfo
+lib/
+/coverage/
+
+**/dist/*
+/dist/esm/*
+
+# caches
+.eslintcache
+.cache
+example/.parcel-cache
+
+# dependencies
+node_modules/
+
+*.log
+.DS_Store
+temp/
+*parcel-cache*

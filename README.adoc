@@ -1,0 +1,7 @@
+= About
+
+This repository is an extension of the example proof-of-concept located at https://github.com/authts/react-oidc-context/tree/main/example.
+
+It is meant to be used in conjunction with an OIDC capable identity provider. In my demonstration I used the https://docs.goauthentik.io/docs/installation/docker-compose[Authentik basic starter docker-compose].
+
+Feel free to use it as you see fit ! 😉

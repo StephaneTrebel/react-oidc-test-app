@@ -6,3 +6,41 @@ It is meant to be used in conjunction with an OIDC capable identity provider. In
 For easy reproducibility, I've included the docker-compose I used in `./authentik`.
 
 Feel free to use it as you see fit ! 😉
+
+= Requirements
+
+- Docker and docker-compose
+
+= How to use
+
+Create a `.env` file having the required `PG_PASS` and `AUTHENTIK_SECRET_KEY` variables, as documented by Authentik:
+
+[source, bash]
+----
+$ echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
+$ echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
+----
+
+Just go into the `./docker` directory and run
+
+[source, bash]
+----
+$ docker compose pull
+$ docker compose up -d
+----
+
+Then you will have access to the following services:
+- `http://localhost:1234` is the React WebApp
+- `http://localhost:9000` is the Authentik instance
+- `http://localhost:1234` is the Keycloak instance
+
+The connexions are as follows:
+- The WebApp is declared as a client in Authentik, with an OIDC provider
+- Authentik uses Keycloak as a "Federated Social Login" option
+- A user "my-user" with password "my-passord" is created in Keycloak
+
+Thus you can test the whole workflow by going to the webapp, clicking on Log In, selecting "Keycloak OIDC" and using the aforementionned credentials for "my-user" to be logged as "my-user" on the webapp.
+
+NOTE: I recommend that you use a different browser profile for Authentik admin session, in order to mix up your session with a test user session with the sample app 😉
+
+And...that's it ! 😁

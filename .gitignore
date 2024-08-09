@@ -21,3 +21,8 @@ node_modules/
 temp/
 *parcel-cache*
 .env
+
+# Authentik stuff
+/media
+/custom-templates
+/certs

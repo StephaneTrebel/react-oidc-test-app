@@ -1,6 +1,18 @@
 ---
 
 services:
+
+  webapp:
+    image: node:22-slim
+    user: node
+    working_dir: "/app"
+    restart: unless-stopped
+    volumes:
+      - ./app:/app
+    command: "npm start"
+    ports:
+      - 1234:1234
+
   keycloak:
     image: quay.io/keycloak/keycloak:25.0.2
     restart: unless-stopped

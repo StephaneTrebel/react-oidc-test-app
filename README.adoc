@@ -13,7 +13,7 @@ Feel free to use it as you see fit ! 😉
 
 = How to use
 
-Create a `.env` file having the required `PG_PASS` and `AUTHENTIK_SECRET_KEY` variables, as documented by Authentik:
+1. Create a `.env` file having the required `PG_PASS` and `AUTHENTIK_SECRET_KEY` variables, as documented by Authentik:
 
 [source, bash]
 ----
@@ -21,7 +21,14 @@ $ echo "PG_PASS=$(openssl rand -base64 36 | tr -d '\n')" >> .env
 $ echo "AUTHENTIK_SECRET_KEY=$(openssl rand -base64 60 | tr -d '\n')" >> .env
 ----
 
-Just go into the `./docker` directory and run
+2. Run this to add `keycloak` as a valid FQDN for `localhost`. Authentik need to communicate with Keycloak in the docker network (thus through `keycloak` FQDN), but in doing so the redirect address will be `keycloak` for login. That's why we need this kinda hack:
+
+[source, bash]
+----
+$ echo "127.0.0.1 keycloak" | sudo tee -a /etc/hosts
+----
+
+3. Now go into the `./docker` directory and run
 
 [source, bash]
 ----
@@ -32,15 +39,15 @@ $ docker compose up -d
 Then you will have access to the following services:
 - `http://localhost:1234` is the React WebApp
 - `http://localhost:9000` is the Authentik instance
-- `http://localhost:1234` is the Keycloak instance
+- `http://localhost:8080` is the Keycloak instance (admittedly you can now also use `http://keycloak:8080` but it's not required for administration purposes)
 
 The connexions are as follows:
-- The WebApp is declared as a client in Authentik, with an OIDC provider
-- Authentik uses Keycloak as a "Federated Social Login" option
-- A user "my-user" with password "my-passord" is created in Keycloak
+- The WebApp is declared as a `my-app` client in Authentik, with a dedicated `Provider for my-app` OIDC provider.
+- Authentik uses `Keycloak OIDC` as a "Federated Social Login" option through a client `authentik-login` created in the `my-realm` Keycloak realm.
+- A user `my-user` with password `my-password` is created in Keycloak. It belongs to the `my-users` Keycloak group.
 
-Thus you can test the whole workflow by going to the webapp, clicking on Log In, selecting "Keycloak OIDC" and using the aforementionned credentials for "my-user" to be logged as "my-user" on the webapp.
+Thus you can test the whole workflow by going to the webapp, clicking on Log In, selecting `Keycloak OIDC` and using the aforementionned credentials for `my-user` to be logged as `my-user` on the webapp.
 
-NOTE: I recommend that you use a different browser profile for Authentik admin session, in order to mix up your session with a test user session with the sample app 😉
+NOTE: I recommend that you use a different browser profile for Authentik admin session, in order to mix up your administrator session with a test user session with the sample app 😉
 
 And...that's it ! 😁

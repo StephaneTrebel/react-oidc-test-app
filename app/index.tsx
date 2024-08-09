@@ -7,9 +7,9 @@ import type { UserProfile, User } from 'oidc-client-ts';
 
 const oidcConfig = {
   authority: 'http://localhost:9000/application/o/my-app',
-  client_id: 'lgHazjCdB9KC7Zz1lyHjLJxvrgU82GoALGbcXZ9F',
+  client_id: 'wn3xjhXWo5wRM2pBRXNUIQBzhK1e0BvHIisE65xS',
   redirect_uri: 'http://localhost:1234/',
-  scope: 'profile ak_proxy',
+  scope: 'profile',
   onSigninCallback: (_user: User | void): void => {
     window.history.replaceState({}, document.title, window.location.pathname);
   },
